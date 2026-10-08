@@ -364,12 +364,21 @@ export default {
 
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f8fafc; color: #1e293b; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background-color: #f8fafc; color: #1e293b; overflow-x: hidden; }
 
-.layout-container { display: flex; min-height: 100vh; }
+.layout-container { display: flex; min-height: 100vh; width: 100%; }
 
-/* Sidebar */
-.sidebar { width: 240px; background: #0f172a; color: white; padding: 24px 16px; display: flex; flex-direction: column; }
+/* Sidebar za desktop */
+.sidebar { 
+  width: 240px; 
+  min-width: 240px; 
+  background: #0f172a; 
+  color: white; 
+  padding: 24px 16px; 
+  display: flex; 
+  flex-direction: column; 
+  flex-shrink: 0; 
+}
 .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; }
 .brand-icon { font-size: 28px; background: #1e293b; padding: 8px; border-radius: 12px; }
 .brand h2 { font-size: 18px; font-weight: 700; }
@@ -383,7 +392,7 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 .status-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; }
 
 /* Main Content */
-.main-content { flex-grow: 1; padding: 32px; overflow-y: auto; }
+.main-content { flex: 1; padding: 32px; min-width: 0; overflow-y: auto; }
 .date-subtitle { color: #64748b; font-size: 14px; margin-top: 4px; }
 
 /* Stats */
@@ -409,8 +418,8 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 .sprat-title { font-size: 16px; font-weight: 800; color: #0f172a; margin-bottom: 16px; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; }
 .sprat-title span { font-weight: 500; font-size: 13px; color: #64748b; }
 
-.sobe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-.soba-card { background: white; border-radius: 16px; padding: 18px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; height: 175px; }
+.sobe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.soba-card { background: white; border-radius: 16px; padding: 16px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; justify-content: space-between; min-height: 170px; }
 .soba-card.slobodna { border-top: 4px solid #10b981; }
 .soba-card.zauzeta { border-top: 4px solid #ef4444; }
 .soba-card.čišćenje { border-top: 4px solid #f59e0b; }
@@ -431,7 +440,6 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 
 .card-action-btn { margin-top: 10px; }
 
-/* Status padajući meni */
 .status-select { 
   width: 100%; 
   padding: 8px; 
@@ -445,4 +453,61 @@ body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Robo
 .status-select.slobodna { background: #dcfce7; color: #15803d; border-color: #86efac; }
 .status-select.zauzeta { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
 .status-select.čišćenje { background: #fef3c7; color: #b45309; border-color: #fde047; }
+
+/* =========================================================
+   POTPUNA PRILAGODBA ZA MOBITELE (POPKATNO / OKOMITO)
+   ========================================================= */
+@media screen and (max-width: 768px) {
+  .layout-container { 
+    flex-direction: column !important; 
+    width: 100vw !important; 
+  }
+  
+  .sidebar { 
+    width: 100% !important; 
+    min-width: 100% !important; 
+    padding: 12px 16px !important; 
+    flex-direction: row !important; 
+    justify-content: space-between !important; 
+    align-items: center !important; 
+    height: auto !important;
+  }
+
+  .brand { margin-bottom: 0 !important; }
+  .brand-icon { font-size: 20px !important; padding: 6px !important; }
+  .brand h2 { font-size: 16px !important; }
+  .brand p { font-size: 10px !important; }
+
+  .nav-menu, .system-status { display: none !important; }
+
+  .main-content { 
+    padding: 12px !important; 
+    width: 100% !important; 
+  }
+
+  /* Statistika u 2 stupca sa zbijenim paddingom */
+  .stats-grid { 
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 8px !important; 
+    margin: 12px 0 !important; 
+  }
+  .stat-card { padding: 10px !important; gap: 8px !important; }
+  .stat-value { font-size: 18px !important; }
+  .stat-icon { font-size: 18px !important; padding: 6px !important; }
+
+  /* Filteri se ljepše ređaju */
+  .filter-section { padding: 10px !important; margin-bottom: 16px !important; }
+  .filter-row { gap: 4px !important; }
+  .filter-label { min-width: 100% !important; margin-top: 4px !important; margin-bottom: 2px !important; }
+  .filter-chip { font-size: 11px !important; padding: 4px 8px !important; }
+
+  /* Sobe u 2 prilagođene kolone na mobitelu */
+  .sobe-grid { 
+    grid-template-columns: repeat(2, 1fr) !important; 
+    gap: 8px !important; 
+  }
+  .soba-card { padding: 10px !important; min-height: 140px !important; }
+  .soba-broj { font-size: 15px !important; }
+  .status-select { font-size: 11px !important; padding: 6px !important; }
+}
 </style>
